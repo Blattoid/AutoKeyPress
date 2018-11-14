@@ -10,7 +10,18 @@ namespace AutoKeyPress
         public Window()
         {
             InitializeComponent();
+
+            //setup thread for first usage
             DoKeystrokes = new Thread(execute_keystrokes);
+
+            //load settings into controls
+            Tab1_commandinput.Text = Properties.Settings.Default.LastEnteredCommand;
+            Tab2_Loop_runonce.Checked = Properties.Settings.Default.Loop_runonce;
+            Tab2_Loop_forever.Checked = Properties.Settings.Default.Loop_forever;
+            Tab2_Loop_limited.Checked = Properties.Settings.Default.Loop_limited;
+            Tab2_Loop_limitinput.Value = Properties.Settings.Default.Loop_maxlimit;
+            Tab2_Loop_sleepinput.Value = Properties.Settings.Default.Loop_sleepfor;
+            Tab2_StartDelay_input.Value = Properties.Settings.Default.StartDelay;
         }
 
         //Thread stuff
@@ -90,6 +101,21 @@ namespace AutoKeyPress
                 DoKeystrokes.Start();
                 Tab1_executebtn.Text = "Stop";
             }
+        }
+
+        private void Window_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //save setting on close
+            Properties.Settings.Default.LastEnteredCommand = Tab1_commandinput.Text;
+            Properties.Settings.Default.Loop_runonce = Tab2_Loop_runonce.Checked;
+            Properties.Settings.Default.Loop_forever = Tab2_Loop_forever.Checked;
+            Properties.Settings.Default.Loop_limited = Tab2_Loop_limited.Checked;
+            Properties.Settings.Default.Loop_maxlimit = (int)Tab2_Loop_limitinput.Value;
+            Properties.Settings.Default.Loop_sleepfor = (int)Tab2_Loop_sleepinput.Value;
+            Properties.Settings.Default.StartDelay = Tab2_StartDelay_input.Value;
+
+            //write changes
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -275,6 +275,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Window";
             this.Text = "Auto Key Presser";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.TabHolder.ResumeLayout(false);
             this.Tab1.ResumeLayout(false);
             this.Tab1.PerformLayout();
